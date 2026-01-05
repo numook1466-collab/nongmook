@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello Kitty Shop - สุชานันท์ อาวาส</title>
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Mali&display=swap" rel="stylesheet">
+    <style>
+        /* 1. กำหนดสีและพื้นหลังหลัก (ข้อ 4) */
+        body {
+            font-family: 'Itim', cursive;
+            margin: 0;
+            padding: 0;
+            background-color: #ffdae9; /* ชมพูพาสเทลหลัก */
+            background-image: linear-gradient(180deg, #ffdae9 0%, #fff9c4 100%); /* ไล่สีไปเหลืองพาสเทล */
+            min-height: 100vh;
+            color: #5d4037;
+        }
+
+        /* 2. เอฟเฟกต์คิตตี้ลอยไปมา */
+        .kitty-fly {
+            position: fixed;
+            top: -50px;
+            z-index: 999;
+            font-size: 30px;
+            pointer-events: none;
+            animation: fall 6s linear infinite;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* 3. ส่วนหัวข้อเว็บ */
+        header {
+            background-color: white;
+            padding: 30px;
+            text-align: center;
+            border-bottom: 6px dashed #ff85a1;
+        }
+        header h1 { color: #ff85a1; margin: 0; font-size: 2.5em; }
+
+        /* 4. เมนูนำทาง (ข้อ 6) */
+        nav {
+            display: flex;
+            justify-content: center;
+            background: #fff9c4; /* สีเหลืองพาสเทล */
+            padding: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        nav button {
+            background: #ff85a1;
+            color: white;
+            border: 2px solid white;
+            padding: 8px 15px;
+            margin: 0 5px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Itim';
+            font-size: 1.1em;
+        }
+
+        /* 5. ส่วนเนื้อหาแต่ละหน้า */
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 30px;
+        }
+        .page { display: none; }
+        .active { display: block; }
+
+        /* 6. กล่องสินค้า (สีฟ้าตามสั่ง) */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .product-card {
+            background: #c1e7ff; /* สีฟ้าพาสเทล */
+            padding: 15px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid white;
+        }
+        .product-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 15px;
+            background: white;
+        }
+
+        /* 7. ตะกร้าสินค้า */
+        .cart-section {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #ff85a1;
+        }
+
+        /* 8. หน้าชำระเงิน */
+        .payment-box {
+            text-align: center;
+            padding: 20px;
+        }
+        .qr-code {
+            width: 180px;
+            border: 4px solid #ff85a1;
+            padding: 10px;
+            border-radius: 10px;
+            background: white;
+        }
+
+        footer { text-align: center; padding: 30px; font-size: 0.9em; color: #ff85a1; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>🌸 Hello Kitty Shop 🎀</h1>
+    <p>ยินดีต้อนรับสู่ร้านของ <b>คุณสุชานันท์ อาวาส</b> ค่ะ</p>
+</header>
+
+<nav>
+    <button onclick="show('home')">หน้าหลัก</button>
+    <button onclick="show('shop')">สั่งซื้อสินค้า</button>
+    <button onclick="show('review')">รีวิวลูกค้า</button>
+    <button onclick="show('pay')">ชำระเงิน</button>
+</nav>
+
+<div class="container">
+    
+    <div id="home" class="page active">
+        <center>
+            <h2 style="color:#ff85a1">สวัสดี ยินดี เชิญเข้าสู่โลกของคิตตี้</h2>
+            <img src="C:\Users\Acer\Downloads\Gemini_Generated_Image_ac1s7fac1s7fac1s (1).png" style="width:100%; border-radius:20px;">
+            <p>เรามีตุ๊กตาคิตตี้น่ารักมากมายให้คุณได้เลือกสะสมกันนะคะ ✨</p>
+        </center>
+    </div>
+
+    <div id="shop" class="page">
+        <div class="cart-section">
+            <h3 style="margin:0">🛒 ตะกร้าสินค้า: <span id="cart-count">0</span> ชิ้น</h3>
+            <p id="cart-total">ยอดรวม: 0 บาท</p>
+        </div>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="C:\Users\Acer\Downloads\Gemini_Generated_Image_7xjv0q7xjv0q7xjv.png">
+                <h4>คิตตี้รุ่นคลาสสิก</h4>
+                <p>350 บาท</p>
+                <button onclick="add('คิตตี้รุ่นคลาสสิก', 350)" style="cursor:pointer">ลงตะกร้า</button>
+            </div>
+            <div class="product-card">
+                <img src="C:\Users\Acer\Downloads\Gemini_Generated_Image_e0vob2e0vob2e0vo.png">
+                <h4>คิตตี้ชุดกระต่าย</h4>
+                <p>450 บาท</p>
+                <button onclick="add('คิตตี้ชุดกระต่าย', 450)" style="cursor:pointer">ลงตะกร้า</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="review" class="page">
+        <div style="background:white; padding:20px; border-radius:20px;">
+            <h3>💖 รีวิวจากลูกค้า</h3>
+            <p><b>คุณน้ำ:</b> สินค้าน่ารักมากค่ะ ร้านคุณสุชานันท์ส่งไวมาก ⭐⭐⭐⭐⭐</p>
+            <p><b>คุณฟ้า:</b> ประทับใจสีพาสเทลของร้านนี้ที่สุดเลยค่ะ ⭐⭐⭐⭐⭐</p>
+        </div>
+    </div>
+
+    <div id="pay" class="page">
+        <div class="payment-box">
+            <h3>💰 ช่องทางชำระเงิน</h3>
+            <img class="qr-code" src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Suchanan_Awas">
+            <p><b>ชื่อบัญชี: นางสาวสุชานันท์ อาวาส</b></p>
+            <p>ธนาคาร: กสิกรไทย (K-Bank)</p>
+            <p>เลขบัญชี: 123-4-56789-0</p>
+            <p style="color:red">โอนแล้วส่งสลิปได้เลยนะคะ 🌸</p>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <p>จัดทำโดย นางสาวสุชานันท์ อาวาส | แบบฝึกหัดบทที่ 4 หน้า 62-64</p>
+</footer>
+
+<script>
+    // 1. ฟังก์ชันสลับหน้า (ข้อ 6)
+    function show(id) {
+        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        window.scrollTo(0,0);
+    }
+
+    // 2. ระบบตะกร้าสินค้า
+    let count = 0;
+    let total = 0;
+    function add(name, price) {
+        count++;
+        total += price;
+        document.getElementById('cart-count').innerText = count;
+        document.getElementById('cart-total').innerText = "ยอดรวม: " + total + " บาท";
+        alert("เพิ่ม " + name + " ลงตะกร้าแล้วค่ะ!");
+    }
+
+    // 3. เอฟเฟกต์คิตตี้ลอย
+    function createKitty() {
+        const icons = ['🐱', '🎀', '🌸', '💖'];
+        const k = document.createElement('div');
+        k.className = 'kitty-fly';
+        k.innerText = icons[Math.floor(Math.random() * icons.length)];
+        k.style.left = Math.random() * 100 + "vw";
+        k.style.animationDuration = (Math.random() * 3 + 3) + "s";
+        document.body.appendChild(k);
+        setTimeout(() => k.remove(), 6000);
+    }
+    setInterval(createKitty, 500);
+</script>
+
+</body>
+</html>
